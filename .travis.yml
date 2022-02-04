@@ -1,0 +1,27 @@
+language: node_js
+services:
+  - redis-server
+node_js:
+  - "12"
+cache:
+  directories:
+  - "node_modules"
+env:
+  global:
+    - CC_TEST_REPORTER_ID=1b37f23c8b7b48e20b1acf5017cabf08994bc3b9c04f5c2a5fdd16aa78f26fb1
+    - NODE_ENV=test
+    - PORT=3500
+    - SPARKPOST_API_KEY=foobar
+    - QUEUE_NAME=mail_test
+    - QUEUE_PROVIDER=redis
+    - QUEUE_URL=redis://localhost:6379
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - npm test
+  - npm run coverage
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

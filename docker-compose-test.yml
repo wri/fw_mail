@@ -6,10 +6,12 @@ services:
       - "3500:3500"
     container_name: gfw-mail-api-test
     environment:
+      PORT: 3500
       NODE_PATH: app/src
       NODE_ENV: test
+      LOGGER_LEVEL: debug
+      SUPPRESS_NO_CONFIG_WARNING: "true"
       SPARKPOST_API_KEY: foobar
-      PORT: 3500
       MONGO_PORT_27017_TCP_ADDR: mongo
       QUEUE_NAME: mail_test
       QUEUE_PROVIDER: redis

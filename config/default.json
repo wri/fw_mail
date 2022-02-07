@@ -1,6 +1,6 @@
 {
   "logger": {
-    "name": "gfw-mail-api-DEV",
+    "name": "gfw-mail-api",
     "level": "debug",
     "toFile": false,
     "dirLogFile": null

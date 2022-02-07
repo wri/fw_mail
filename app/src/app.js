@@ -57,7 +57,7 @@ const appServer = require("http").Server(app.callback());
 
 // get port of environment, if not exist obtain of the config.
 // In production environment, the port must be declared in environment variable
-const port = process.env.PORT || config.get("service.port");
+const port = config.get("service.port");
 
 const server = appServer.listen(port, () => {});
 

@@ -9,6 +9,8 @@ services:
       PORT: 3500
       NODE_PATH: app/src
       NODE_ENV: dev
+      LOGGER_LEVEL: debug
+      SUPPRESS_NO_CONFIG_WARNING: "true"
       API_GATEWAY_URL: http://192.168.99.100:8000
       QUEUE_URL: redis://192.168.99.100:6379
       QUEUE_PROVIDER: redis

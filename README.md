@@ -1,59 +1,50 @@
 # Global Forest Watch Mail API
 
-[![Build Status](https://travis-ci.com/gfw-api/gfw-mail-api.svg?branch=develop)](https://travis-ci.com/gfw-api/gfw-mail-api)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a4f13ba330b5d5573d7a/test_coverage)](https://codeclimate.com/github/gfw-api/gfw-mail-api/test_coverage)
-
 This repository is the microservice that send the emails.
-
-[View the documentation for this
-API](http://gfw-api.github.io/swagger-ui/?url=https://raw.githubusercontent.com/gfw-api/gfw-mail-api/production/app/microservice/swagger.yml#/Mail)
-
-1. [Getting Started](#getting-started)
-2. [Deployment](#deployment)
 
 ## Getting Started
 
-### OS X
-
 **First, make sure that you have the [API gateway running
-locally](https://github.com/Vizzuality/api-gateway/tree/production#getting-started).**
+locally](https://github.com/wri/fw_api).**
 
-We're using Docker which, luckily for you, means that getting the
-application running locally should be fairly painless. First, make sure
-that you have [Docker Compose](https://docs.docker.com/compose/install/)
-installed on your machine.
-
-If you've not used Docker before, you may need to set up some defaults:
+Start by cloning the repository from github to your execution environment
 
 ```
-docker-machine create --driver virtualbox default
-docker-machine start default
-eval $(docker-machine env default)
+git clone https://github.com/wri/fw_mail.git && cd fw_teams
 ```
 
-Now we're ready to actually get the application running:
+After that, follow one of the instructions below:
 
-```
-git clone https://github.com/Vizzuality/gfw-ogr-api.git
-cd gfw-mail-api
-npm install
-npm run develop
-```
+### Using Docker
 
-You can now access the microservice through the API gateway.
+1 - Execute the following command to run Docker:
 
-## Deployment
-
-The application is deployed to Heroku. Setup Heroku for the repository:
-
-```
-heroku git:remote -a gfw-mail-api-staging -r staging
+```shell
+make up-and-build   # First time building Docker or you've made changes to the Dockerfile
+make up             # When Docker has already been built and you're starting from where you left off
 ```
 
-And deploy as normal:
+The endpoints provided by this microservice should now be available: [localhost:3500](http://localhost:3500)
 
+2 - Run the following command to lint the project:
+
+```shell
+make lint
 ```
-git push staging master
+
+3 - To close Docker:
+
+```shell
+make down
+```
+
+## Testing
+
+### Using Docker
+
+Follow the instruction above for setting up the runtime environment for Docker execution, then run:
+```shell
+make test-and-build
 ```
 
 ### Configuration

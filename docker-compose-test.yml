@@ -14,10 +14,10 @@ services:
       QUEUE_NAME: mail_test
       QUEUE_PROVIDER: redis
       QUEUE_URL: redis://redis
-    command: test
     depends_on:
       - redis
       - mongo
+    command: node node_modules/.bin/grunt --gruntfile app/Gruntfile.js e2eTest
 
   redis:
     image: redis

@@ -14,6 +14,6 @@ services:
       QUEUE_PROVIDER: redis
       QUEUE_NAME: mail
       SPARKPOST_API_KEY: notset
-    command: develop
     volumes:
       - ./app:/opt/gfw-mail-api/app
+    command: node node_modules/.bin/grunt --gruntfile app/Gruntfile.js

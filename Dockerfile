@@ -7,7 +7,7 @@ ENV USER microservice
 RUN addgroup $USER && adduser -s /bin/bash -D -G $USER $USER
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache --update bash git openssh python build-base
+    apk add --no-cache --update bash git openssh python3 build-base
 
 RUN yarn global add grunt-cli bunyan
 

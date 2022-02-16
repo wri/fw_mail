@@ -6,9 +6,6 @@ const co = require("co");
 
 const MailQueue = require("../../src/queues/mailQueue");
 
-nock.disableNetConnect();
-nock.enableNetConnect(process.env.HOST_IP);
-
 const should = chai.should();
 chai.use(require("chai-datetime"));
 

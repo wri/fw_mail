@@ -47,7 +47,13 @@ app.use(function* handleErrors(next) {
 // load custom validator
 app.use(validate());
 
-app.use(convert.back(koaSimpleHealthCheck()));
+app.use(
+  convert.back(
+    koaSimpleHealthCheck({
+      path: "/api/v1/fw_mail/healthcheck"
+    })
+  )
+);
 
 // load routes
 loader.loadQueues(app);

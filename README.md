@@ -10,7 +10,7 @@ locally](https://github.com/wri/fw_api).**
 Start by cloning the repository from github to your execution environment
 
 ```
-git clone https://github.com/wri/fw_mail.git && cd fw_teams
+git clone https://github.com/wri/fw_mail.git && cd fw_mail
 ```
 
 After that, follow one of the instructions below:

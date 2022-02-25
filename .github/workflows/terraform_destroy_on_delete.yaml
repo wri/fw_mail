@@ -17,8 +17,7 @@ jobs:
         AWS_REGION: ${{ secrets.aws_region_production }}
       run: ./scripts/delete_workspace -f -g "no_sha_awailable"
     - name: Destroy state and delete staging workspace
-      if: success() && github.ref == 'refs/heads/dev'
-      # if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/staging'
+      if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/staging'
       env:
         ENV: staging
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_key_staging }}
@@ -26,7 +25,8 @@ jobs:
         AWS_REGION: ${{ secrets.aws_region_staging }}
       run: ./scripts/delete_workspace -f -g "no_sha_awailable"
     - name: Destroy state and delete dev workspace
-      if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/dev'
+      if: success() && github.ref == 'refs/heads/dev'
+      # if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/dev'
       env:
         ENV: dev
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_key_dev }}

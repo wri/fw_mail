@@ -1,0 +1,6 @@
+{
+  "service": {
+    "uri": "http://gfw-mail-api-staging.herokuapp.com",
+    "port": null
+  }
+}

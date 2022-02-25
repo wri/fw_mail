@@ -1,0 +1,63 @@
+[{
+  "name": "${container_name}",
+  "image": "${image}",
+  "networkMode": "awsvpc",
+
+  "environment": [
+    {
+        "name": "PORT",
+        "value": "${port}"
+    },
+    {
+        "name": "NODE_PATH",
+        "value": "${node_path}"
+    },
+    {
+        "name": "NODE_ENV",
+        "value": "${node_env}"
+    },
+    {
+        "name": "LOGGER_LEVEL",
+        "value": "${logger_level}"
+    },
+    {
+        "name": "SUPPRESS_NO_CONFIG_WARNING",
+        "value": "${suppress_no_config_warning}"
+    },
+    {
+        "name": "API_GATEWAY_URL",
+        "value": "${api_gateway_url}"
+    },
+    {
+        "name": "QUEUE_URL",
+        "value": "${queue_url}"
+    },
+    {
+        "name": "QUEUE_PROVIDER",
+        "value": "${queue_provider}"
+    },
+    {
+        "name": "QUEUE_NAME",
+        "value": "${queue_name}"
+    },
+    {
+        "name": "SPARKPOST_API_KEY",
+        "value": "${sparkpost_api_key}"
+    }
+  ],
+  "secrets": [],
+  "portMappings": [
+    {
+      "containerPort": ${container_port},
+      "hostPort": ${container_port}
+    }
+  ],
+  "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "${container_name}"
+       }
+  }
+}]

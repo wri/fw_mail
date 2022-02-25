@@ -1,7 +1,7 @@
-
 name: Run tests and apply terraform changes for current branch
 
 on: [push]
+
 
 jobs:
   build:

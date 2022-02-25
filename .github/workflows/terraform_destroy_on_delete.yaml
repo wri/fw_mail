@@ -1,7 +1,7 @@
-
 name: Destroy state and delete workspace after deleting branch
 
 on: [delete]
+
 
 jobs:
   build:

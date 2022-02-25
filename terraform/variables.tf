@@ -1,6 +1,6 @@
 variable "project_prefix" {
   type = string
-  default = "fw-api"
+  default = "fw-mail"
 }
 
 variable "environment" {

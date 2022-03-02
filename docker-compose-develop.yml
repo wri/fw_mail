@@ -20,19 +20,9 @@ services:
       - ./app:/opt/gfw-mail-api/app
     depends_on:
       - redis
-      - mongo
     command: node node_modules/.bin/grunt --gruntfile app/Gruntfile.js
 
   redis:
     image: redis
     expose:
       - 6379
-
-  # mongo:
-  #   image: mongo:3.4
-  #   container_name: mail-mongo-test
-  #   command: --smallfiles
-  #   ports:
-  #     - "27017"
-  #   volumes:
-  #     - $HOME/docker/data/dataset:/data/db

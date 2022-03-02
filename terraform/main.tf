@@ -74,16 +74,16 @@ data "template_file" "container_definition" {
     environment    = var.environment
     
     # Environment variables
-    PORT = var.container_port
-    NODE_PATH = var.node_path
-    NODE_ENV = var.node_env
-    LOGGER_LEVEL = var.logger_level
-    SUPPRESS_NO_CONFIG_WARNING = var.suppress_no_config_warning
-    API_GATEWAY_URI = var.api_gateway_url
-    QUEUE_URL = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
-    QUEUE_PROVIDER = var.queue_provider
-    QUEUE_NAME = var.queue_name
-    SPARKPOST_API_KEY = var.sparkpost_api_key
+    port = var.container_port
+    node_path = var.node_path
+    node_env = var.node_env
+    logger_level = var.logger_level
+    suppress_no_config_warning = var.suppress_no_config_warning
+    api_gateway_url = var.api_gateway_url
+    queue_url = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
+    queue_provider = var.queue_provider
+    queue_name = var.queue_name
+    sparkpost_api_key = var.sparkpost_api_key
 
     # Secrets
     # none

@@ -50,7 +50,7 @@ app.use(validate());
 app.use(
   convert.back(
     koaSimpleHealthCheck({
-      path: "/api/v1/fw_mail/healthcheck"
+      path: "/v1/fw_mail/healthcheck"
     })
   )
 );

@@ -13,6 +13,6 @@ queue_provider             = "redis"
 queue_name                 = "mail"
 sparkpost_api_key          = "notset"
 
-healthcheck_sns_emails = []
+healthcheck_sns_emails = ["test@example.com"]
 healthcheck_path = "/v1/fw_mail/healthcheck"
 # queue_url="redis://redis" # Do not set! Is set automatically from "core" remote state in main.tf

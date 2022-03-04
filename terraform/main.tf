@@ -109,5 +109,5 @@ module "route53_healthcheck" {
   prefix           = var.project_prefix
   healthcheck_fqdn = data.terraform_remote_state.fw_core.outputs.public_url
   healthcheck_path = "/v1/fw_mail/healthcheck"
-  forward_emails   = []
+  forward_emails   = ["test@example.com"]
 }

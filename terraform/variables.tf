@@ -86,7 +86,7 @@ variable "sparkpost_api_key" {
   default = "notset"
 }
 
-variable "healthceck_sns_emails" {
+variable "healthcheck_sns_emails" {
   type    = list(string)
   default = []
 }

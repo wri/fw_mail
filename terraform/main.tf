@@ -99,3 +99,19 @@ resource "aws_cloudwatch_log_group" "default" {
   name              = "/aws/ecs/${var.project_prefix}-logs"
   retention_in_days = var.log_retention
 }
+
+#
+# Route53 Healthcheck Resources
+#
+resource "aws_route53_health_check" "healthcheck" {
+  fqdn              = data.terraform_remote_state.fw_core.outputs.public_url
+  port              = 443
+  type              = "HTTPS"
+  resource_path     = "/v1/fw_mail/healthcheck"
+  failure_threshold = "5"
+  request_interval  = "30"
+
+  tags = {
+    Name = "${var.project_prefix}-rt53-health-check"
+  }
+}

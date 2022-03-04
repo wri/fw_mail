@@ -107,7 +107,7 @@ resource "aws_route53_health_check" "healthcheck" {
   fqdn              = data.terraform_remote_state.fw_core.outputs.public_url
   port              = 443
   type              = "HTTPS"
-  resource_path     = "/v1/fw_mail/healthcheck"
+  resource_path     = "/v1/teams/healthchek"
   failure_threshold = "5"
   request_interval  = "30"
 

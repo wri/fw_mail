@@ -52,8 +52,8 @@ module "fargate_autoscaling" {
   lb_target_group_arn = module.fargate_autoscaling.lb_target_group_arn
   listener_arn        = data.terraform_remote_state.fw_core.outputs.lb_listener_arn
   project_prefix      = var.project_prefix
-  path_pattern        = ["/v1/fw_mail/healthcheck"]
-  health_check_path   = "/v1/fw_mail/healthcheck"
+  path_pattern        = [var.healthcheck_path]
+  health_check_path   = var.healthcheck_path
   priority            = 7
 
   depends_on = [
@@ -108,6 +108,9 @@ module "route53_healthcheck" {
   source           = "./modules/route53_healthcheck"
   prefix           = var.project_prefix
   healthcheck_fqdn = data.terraform_remote_state.fw_core.outputs.public_url
-  healthcheck_path = "/v1/fw_mail/healthcheck"
-  forward_emails   = ["test@example.com"]
+  healthcheck_path = var.healthcheck_path
+  forward_emails   = var.healthcheck_sns_emails
+  depends_on = [
+    module.fargate_autoscaling
+  ]
 }

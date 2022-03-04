@@ -10,7 +10,7 @@ resource "aws_route53_health_check" "healthcheck" {
   request_interval  = "30"
 
   tags = {
-    Name = "${var.prefix}-rt53-health-check"
+    Name = "${var.prefix}-rt53-health_check"
   }
 }
 
@@ -40,6 +40,9 @@ resource "aws_sns_topic_subscription" "topic_email_subscription" {
   topic_arn = aws_sns_topic.healthcheck_updates.arn
   protocol  = "email"
   endpoint  = var.forward_emails[count.index]
+  depends_on = [
+    aws_sns_topic.healthcheck_updates
+  ]
 }
 
 resource "aws_cloudwatch_metric_alarm" "healthcheck_failed" {
@@ -53,11 +56,11 @@ resource "aws_cloudwatch_metric_alarm" "healthcheck_failed" {
   threshold           = "1"
   unit                = "None"
   dimensions = {
-    HealthCheckId = "${aws_route53_health_check.healthcheck.id}"
+    HealthCheckId = aws_route53_health_check.healthcheck.id
   }
   alarm_description         = "This metric monitors whether the service endpoint is down or not."
-  alarm_actions             = ["${aws_sns_topic.healthcheck_updates.arn}"]
-  insufficient_data_actions = ["${aws_sns_topic.healthcheck_updates.arn}"]
+  alarm_actions             = [aws_sns_topic.healthcheck_updates.arn]
+  insufficient_data_actions = [aws_sns_topic.healthcheck_updates.arn]
   treat_missing_data        = "breaching"
   depends_on                = [aws_route53_health_check.healthcheck]
 }

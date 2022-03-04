@@ -53,8 +53,8 @@ module "fargate_autoscaling" {
   listener_arn        = data.terraform_remote_state.fw_core.outputs.lb_listener_arn
   project_prefix      = var.project_prefix
   path_pattern        = ["/v1/fw_mail/healthcheck"]
-  health_check_path = "/v1/fw_mail/healthcheck"
-  priority = 7
+  health_check_path   = "/v1/fw_mail/healthcheck"
+  priority            = 7
 
   depends_on = [
     module.app_docker_image
@@ -72,18 +72,18 @@ data "template_file" "container_definition" {
     log_group      = aws_cloudwatch_log_group.default.name
     aws_region     = var.region
     environment    = var.environment
-    
+
     # Environment variables
-    port = var.container_port
-    node_path = var.node_path
-    node_env = var.node_env
-    logger_level = var.logger_level
+    port                       = var.container_port
+    node_path                  = var.node_path
+    node_env                   = var.node_env
+    logger_level               = var.logger_level
     suppress_no_config_warning = var.suppress_no_config_warning
-    api_gateway_url = var.api_gateway_url
-    queue_url = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
-    queue_provider = var.queue_provider
-    queue_name = var.queue_name
-    sparkpost_api_key = var.sparkpost_api_key
+    api_gateway_url            = var.api_gateway_url
+    queue_url                  = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
+    queue_provider             = var.queue_provider
+    queue_name                 = var.queue_name
+    sparkpost_api_key          = var.sparkpost_api_key
 
     # Secrets
     # none
@@ -114,4 +114,52 @@ resource "aws_route53_health_check" "healthcheck" {
   tags = {
     Name = "${var.project_prefix}-rt53-health-check"
   }
+}
+
+resource "aws_sns_topic" "healthcheck_updates" {
+  name = "${var.project_prefix}_healthcheck"
+  delivery_policy = jsonencode({
+    "http" : {
+      "defaultHealthyRetryPolicy" : {
+        "minDelayTarget" : 20,
+        "maxDelayTarget" : 20,
+        "numRetries" : 3,
+        "numMaxDelayRetries" : 0,
+        "numNoDelayRetries" : 0,
+        "numMinDelayRetries" : 0,
+        "backoffFunction" : "linear"
+      },
+      "disableSubscriptionOverrides" : false,
+      "defaultThrottlePolicy" : {
+        "maxReceivesPerSecond" : 1
+      }
+    }
+  })
+}
+
+resource "aws_sns_topic_subscription" "topic_email_subscription" {
+  count     = length(var.healthceck_sns_emails)
+  topic_arn = aws_sns_topic.healthcheck_updates.arn
+  protocol  = "email"
+  endpoint  = var.healthceck_sns_emails[count.index]
+}
+
+resource "aws_cloudwatch_metric_alarm" "healthcheck_failed" {
+  alarm_name          = "${var.project_prefix}_healthcheck_failed"
+  namespace           = "AWS/Route53"
+  metric_name         = "HealthCheckStatus"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "1"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "1"
+  unit                = "None"
+  dimensions = {
+    HealthCheckId = "${aws_route53_health_check.healthcheck.id}"
+  }
+  alarm_description         = "This metric monitors whether the service endpoint is down or not."
+  alarm_actions             = ["${aws_sns_topic.healthcheck_updates.arn}"]
+  insufficient_data_actions = ["${aws_sns_topic.healthcheck_updates.arn}"]
+  treat_missing_data        = "breaching"
+  depends_on                = [aws_route53_health_check.healthcheck]
 }

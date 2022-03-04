@@ -9,7 +9,10 @@ node_path="app/src"
 node_env="dev"
 suppress_no_config_warning="true"
 api_gateway_url="http://192.168.99.100:8000"
-# queue_url="redis://redis" # Do not set! Is set automatically from "core" remote state in main.tf
 queue_provider="redis"
 queue_name="mail"
 sparkpost_api_key="notset"
+
+healthceck_sns_emails=["kigaj14244@wodeda.com"]
+
+# queue_url="redis://redis" # Do not set! Is set automatically from "core" remote state in main.tf

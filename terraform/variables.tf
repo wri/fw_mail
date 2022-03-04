@@ -1,5 +1,5 @@
 variable "project_prefix" {
-  type = string
+  type    = string
   default = "fw-mail"
 }
 
@@ -84,4 +84,9 @@ variable "queue_name" {
 variable "sparkpost_api_key" {
   type    = string
   default = "notset"
+}
+
+variable "healthceck_sns_emails" {
+  type    = list(string)
+  default = []
 }

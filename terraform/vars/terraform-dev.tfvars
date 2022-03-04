@@ -13,6 +13,6 @@ queue_provider="redis"
 queue_name="mail"
 sparkpost_api_key="notset"
 
-healthceck_sns_emails=["kigaj14244@wodeda.com"]
+healthceck_sns_emails=["newkuktuasd@sharklasers.com"]
 
 # queue_url="redis://redis" # Do not set! Is set automatically from "core" remote state in main.tf

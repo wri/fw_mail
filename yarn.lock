@@ -226,6 +226,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@koa/cors@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@koa/cors/-/cors-3.1.0.tgz#618bb073438cfdbd3ebd0e648a76e33b84f3a3b2"
+  integrity sha512-7ulRC1da/rBa6kj6P4g2aJfnET3z8Uf3SWu60cjbtxTA5g8lxRdX/Bd2P92EagGwwAhANeNw8T8if99rJliR6Q==
+  dependencies:
+    vary "^1.1.2"
+
 "@types/chai@4":
   version "4.2.11"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.11.tgz#d3614d6c5f500142358e6ed24e1bf16657536c50"
@@ -4648,7 +4655,7 @@ validator@^3.22.1:
   resolved "https://registry.yarnpkg.com/validator/-/validator-3.43.0.tgz#96464b992d4196833d97a194bf40b19ff54bae05"
   integrity sha1-lkZLmS1BloM9l6GUv0Cxn/VLrgU=
 
-vary@^1.0.0:
+vary@^1.0.0, vary@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=

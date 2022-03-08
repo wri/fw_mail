@@ -2,6 +2,7 @@
 const config = require("config");
 const logger = require("logger");
 const koa = require("koa");
+const cors = require("@koa/cors");
 const koaLogger = require("koa-logger");
 const loader = require("loader");
 const validate = require("koa-validate");
@@ -46,6 +47,8 @@ app.use(function* handleErrors(next) {
 
 // load custom validator
 app.use(validate());
+
+app.use(convert.back(cors()));
 
 app.use(
   convert.back(

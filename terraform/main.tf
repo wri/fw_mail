@@ -52,9 +52,9 @@ module "fargate_autoscaling" {
   lb_target_group_arn = module.fargate_autoscaling.lb_target_group_arn
   listener_arn        = data.terraform_remote_state.fw_core.outputs.lb_listener_arn
   project_prefix      = var.project_prefix
-  path_pattern        = [var.healthcheck_path]
-  health_check_path   = var.healthcheck_path
-  priority            = 7
+  path_pattern        = ["/v1/fw_mail/healthcheck"]
+  health_check_path = "/v1/fw_mail/healthcheck"
+  priority = 7
 
   depends_on = [
     module.app_docker_image
@@ -72,18 +72,18 @@ data "template_file" "container_definition" {
     log_group      = aws_cloudwatch_log_group.default.name
     aws_region     = var.region
     environment    = var.environment
-
+    
     # Environment variables
-    port                       = var.container_port
-    node_path                  = var.node_path
-    node_env                   = var.node_env
-    logger_level               = var.logger_level
+    port = var.container_port
+    node_path = var.node_path
+    node_env = var.node_env
+    logger_level = var.logger_level
     suppress_no_config_warning = var.suppress_no_config_warning
-    api_gateway_url            = var.api_gateway_url
-    queue_url                  = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
-    queue_provider             = var.queue_provider
-    queue_name                 = var.queue_name
-    sparkpost_api_key          = var.sparkpost_api_key
+    api_gateway_url = var.api_gateway_url
+    queue_url = "redis://${data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address}"
+    queue_provider = var.queue_provider
+    queue_name = var.queue_name
+    sparkpost_api_key = var.sparkpost_api_key
 
     # Secrets
     # none
@@ -98,19 +98,4 @@ data "template_file" "container_definition" {
 resource "aws_cloudwatch_log_group" "default" {
   name              = "/aws/ecs/${var.project_prefix}-logs"
   retention_in_days = var.log_retention
-}
-
-#
-# Route53 Healthcheck
-#
-
-module "route53_healthcheck" {
-  source           = "./modules/route53_healthcheck"
-  prefix           = var.project_prefix
-  healthcheck_fqdn = data.terraform_remote_state.fw_core.outputs.public_url
-  healthcheck_path = var.healthcheck_path
-  forward_emails   = var.healthcheck_sns_emails
-  depends_on = [
-    module.fargate_autoscaling
-  ]
 }

@@ -14,7 +14,7 @@ const Sentry = require('@sentry/node');
 // instance of koa
 const app = koa();
 
-Sentry.init({ dsn: "https://47cec6ec01004383895a2db0e1f41275@o163691.ingest.sentry.io/6262146" });
+Sentry.init({ dsn: "https://a8b99d861b264fa68a8985f3f8508c00@o163691.ingest.sentry.io/6262197" });
 
 app.on("error", (err, ctx) => {
   Sentry.withScope(function(scope) {

@@ -9,9 +9,21 @@ const validate = require("koa-validate");
 const ErrorSerializer = require("serializers/errorSerializer");
 const convert = require("koa-convert");
 const koaSimpleHealthCheck = require("koa-simple-healthcheck");
+const Sentry = require('@sentry/node');
 
 // instance of koa
 const app = koa();
+
+Sentry.init({ dsn: "https://47cec6ec01004383895a2db0e1f41275@o163691.ingest.sentry.io/6262146" });
+
+app.on("error", (err, ctx) => {
+  Sentry.withScope(function(scope) {
+    scope.addEventProcessor(function(event) {
+      return Sentry.Handlers.parseRequest(event, ctx.request);
+    });
+    Sentry.captureException(err);
+  });
+});
 
 // if environment is dev then load koa-logger
 if (process.env.NODE_ENV === "dev") {

@@ -25,6 +25,8 @@ app.on("error", (err, ctx) => {
   });
 });
 
+myUndefinedFunction();
+
 // if environment is dev then load koa-logger
 if (process.env.NODE_ENV === "dev") {
   logger.debug("Use logger");

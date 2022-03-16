@@ -85,3 +85,10 @@ variable "sparkpost_api_key" {
   type    = string
   default = "notset"
 }
+variable "healthcheck_path" {
+  type = string
+}
+
+variable "healthcheck_sns_emails" {
+  type = list(string)
+}

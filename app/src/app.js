@@ -9,7 +9,7 @@ const validate = require("koa-validate");
 const ErrorSerializer = require("serializers/errorSerializer");
 const convert = require("koa-convert");
 const koaSimpleHealthCheck = require("koa-simple-healthcheck");
-const Sentry = require('@sentry/node');
+const Sentry = require("@sentry/node");
 
 // instance of koa
 const app = koa();
@@ -17,8 +17,8 @@ const app = koa();
 Sentry.init({ dsn: "https://a8b99d861b264fa68a8985f3f8508c00@o163691.ingest.sentry.io/6262197" });
 
 app.on("error", (err, ctx) => {
-  Sentry.withScope(function(scope) {
-    scope.addEventProcessor(function(event) {
+  Sentry.withScope(function (scope) {
+    scope.addEventProcessor(function (event) {
       return Sentry.Handlers.parseRequest(event, ctx.request);
     });
     Sentry.captureException(err);
@@ -44,6 +44,7 @@ app.use(function* handleErrors(next) {
     }
     this.status = error.status || this.status || 500;
     if (this.status >= 500) {
+      Sentry.captureException(error); // send error to sentry
       logger.error(error);
     } else {
       logger.info(error);

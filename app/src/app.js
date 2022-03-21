@@ -71,6 +71,15 @@ app.use(
   )
 );
 
+app.use(
+  convert.back(function (ctx) {
+    if (ctx.request.url === "/v1/fw_mail/healthcheck/fail") {
+      ctx.status = 500;
+      throw new Error("Test Fail");
+    }
+  })
+);
+
 // load routes
 loader.loadQueues(app);
 

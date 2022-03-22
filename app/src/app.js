@@ -54,7 +54,7 @@ app.use(function* handleErrors(next) {
     }
 
     this.body = ErrorSerializer.serializeError(this.status, error.message);
-    if (process.env.NODE_ENV === "prod" && this.status === 500) {
+    if (process.env.NODE_ENV === "production" && this.status === 500) {
       this.body = "Unexpected error";
     }
   }

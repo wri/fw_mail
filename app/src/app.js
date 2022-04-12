@@ -5,14 +5,15 @@ const koa = require("koa");
 const cors = require("@koa/cors");
 const koaLogger = require("koa-logger");
 const loader = require("loader");
-const validate = require("koa-validate");
 const ErrorSerializer = require("serializers/errorSerializer");
 const convert = require("koa-convert");
 const koaSimpleHealthCheck = require("koa-simple-healthcheck");
 const Sentry = require("@sentry/node");
 
 // instance of koa
-const app = koa();
+const app = new koa();
+const _use = app.use
+app.use = x => _use.call(app, convert(x))
 
 Sentry.init({
   dsn: "https://a8b99d861b264fa68a8985f3f8508c00@o163691.ingest.sentry.io/6262197",
@@ -59,7 +60,7 @@ app.use(function* handleErrors(next) {
 });
 
 // load custom validator
-app.use(validate());
+require("koa-validate")(app);
 
 app.use(convert.back(cors()));
 

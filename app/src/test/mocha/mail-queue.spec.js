@@ -4,7 +4,7 @@ const config = require("config");
 const AsyncClient = require("vizz.async-client");
 const co = require("co");
 
-const MailQueue = require("../../src/queues/mailQueue");
+const MailQueue = require("../../queues/mailQueue");
 
 const should = chai.should();
 chai.use(require("chai-datetime"));

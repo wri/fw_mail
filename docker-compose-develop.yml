@@ -7,7 +7,6 @@ services:
     container_name: gfw-mail-api-develop
     environment:
       PORT: 3500
-      NODE_PATH: app/src
       NODE_ENV: dev
       LOGGER_LEVEL: debug
       SUPPRESS_NO_CONFIG_WARNING: "true"
@@ -18,9 +17,31 @@ services:
       SPARKPOST_API_KEY: notset
     volumes:
       - ./app:/opt/gfw-mail-api/app
+      - ./nodemon.json:/opt/gfw-mail-api/nodemon.json # Change NAME to the value of $NAME in the Dockerfile
     depends_on:
       - redis
-    command: node node_modules/.bin/grunt --gruntfile app/Gruntfile.js
+    command: yarn dev
+
+  test:
+    build: .
+    container_name: gfw-mail-api-test
+    environment:
+      PORT: 3500
+      NODE_ENV: test
+      LOGGER_LEVEL: debug
+      SUPPRESS_NO_CONFIG_WARNING: "true"
+      SPARKPOST_API_KEY: foobar
+      MONGO_PORT_27017_TCP_ADDR: mongo
+      QUEUE_NAME: mail_test
+      QUEUE_PROVIDER: redis
+      QUEUE_URL: redis://redis
+    volumes:
+      - ./app:/opt/gfw-mail-api/app    # Change NAME to the value of $NAME in the Dockerfile
+      - ./nodemon.json:/opt/gfw-mail-api/nodemon.json
+      - ./jest.config.js:/opt/gfw-mail-api/jest.config.js
+    command: yarn test
+    depends_on:
+      - redis
 
   redis:
     image: redis

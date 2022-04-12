@@ -80,7 +80,9 @@ const appServer = require("http").Server(app.callback());
 // In production environment, the port must be declared in environment variable
 const port = config.get("service.port");
 
-const server = appServer.listen(port, () => {});
+const server = appServer.listen(port, () => {
+  // comment for eslint
+});
 
 logger.info(`Server started in port:${port}`);
 

@@ -16,7 +16,7 @@ const CHANNEL = config.get("apiGateway.queueName");
 const channelSubscribe = asyncClientSubscriber.toChannel(CHANNEL);
 channelSubscribe.subscribe();
 
-describe("MailQueue ", function () {
+describe("MailQueue", function () {
   // eslint-disable-next-line mocha/no-hooks-for-single-case
   before(async function () {
     if (process.env.NODE_ENV !== "test") {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const chai = require("chai");
 const nock = require("nock");
 const config = require("config");

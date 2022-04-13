@@ -81,9 +81,7 @@ const appServer = require("http").Server(app.callback());
 const port = config.get("service.port");
 
 const server = appServer.listen(port, () => {
-  // comment for eslint
+  logger.info(`Server started in port:${port}`);
 });
-
-logger.info(`Server started in port:${port}`);
 
 module.exports = server;

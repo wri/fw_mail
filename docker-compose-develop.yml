@@ -17,7 +17,7 @@ services:
       SPARKPOST_API_KEY: notset
     volumes:
       - ./app:/opt/gfw-mail-api/app
-      - ./nodemon.json:/opt/gfw-mail-api/nodemon.json # Change NAME to the value of $NAME in the Dockerfile
+      - ./nodemon.json:/opt/gfw-mail-api/nodemon.json
     depends_on:
       - redis
     command: yarn dev
@@ -36,7 +36,7 @@ services:
       QUEUE_PROVIDER: redis
       QUEUE_URL: redis://redis
     volumes:
-      - ./app:/opt/gfw-mail-api/app    # Change NAME to the value of $NAME in the Dockerfile
+      - ./app:/opt/gfw-mail-api/app
       - ./nodemon.json:/opt/gfw-mail-api/nodemon.json
       - ./jest.config.js:/opt/gfw-mail-api/jest.config.js
     command: yarn test

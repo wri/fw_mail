@@ -1,10 +1,11 @@
+/* eslint-disable */
 const chai = require("chai");
 const nock = require("nock");
 const config = require("config");
 const AsyncClient = require("vizz.async-client");
 const co = require("co");
 
-const MailQueue = require("../../src/queues/mailQueue");
+const MailQueue = require("../../queues/mailQueue");
 
 const should = chai.should();
 chai.use(require("chai-datetime"));
@@ -16,7 +17,7 @@ const CHANNEL = config.get("apiGateway.queueName");
 const channelSubscribe = asyncClientSubscriber.toChannel(CHANNEL);
 channelSubscribe.subscribe();
 
-describe("MailQueue ", function () {
+describe("MailQueue", function () {
   // eslint-disable-next-line mocha/no-hooks-for-single-case
   before(async function () {
     if (process.env.NODE_ENV !== "test") {

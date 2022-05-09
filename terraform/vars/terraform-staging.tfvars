@@ -1,8 +1,11 @@
 environment               = "staging"
-logger_level                 = "info"
+logger_level              = "info"
+
+// Only ever have one replica running, otherwise multiple emails will be sent!
+// As multiple services will subscribe to the Redis channel
 desired_count             = 1
 auto_scaling_min_capacity = 1
-auto_scaling_max_capacity = 15
+auto_scaling_max_capacity = 1
 
 container_port=3500
 node_path="app/src"
